@@ -11,12 +11,12 @@ set -e
 
 #massive thanks to @sneetsher for finding and fixing all of my mistakes!
 
-VERSION=$(head debian/changelog -n1 | sed -e "s/.*(//g" -e "s/-.*//g")
+VERSION=$(head debian/changelog -n1 | sed -e "s/.*(//g" -e "s/-[a-zA-Z0-9+~\.]\+).*//;s/).*//")
 
 #get a bunch of stuff we'll need to  make the packages
 sudo apt-get install -y dh-make dh-autoreconf bzr-builddeb pbuilder ubuntu-dev-tools debootstrap devscripts
 #get the stuff we need to build the software
-sudo apt-get install -y autoconf automake pkg-config libtool make gcc g++ lcov libcurl4-openssl-dev libzmq3-dev
+sudo apt-get install -y autoconf automake pkg-config libtool make gcc g++ lcov libcurl4-openssl-dev libzmq3-dev libboost-all-dev libgeos-dev libgeos++-dev lua5.2 liblua5.2-dev libprime-server0.6.3-dev libprotobuf-dev libspatialite-dev libsqlite3-dev protobuf-compiler jq python-all-dev libvalhalla-dev
 
 #tell bzr who we are
 export DEBFULLNAME='Matt Amos'
@@ -33,14 +33,14 @@ rm -rf local_build
 mkdir local_build
 pushd local_build
 #get code into the form bzr likes
-git clone --branch ${VERSION} --recursive  https://github.com/opentraffic/osmlr.git ${PACKAGE}
+git clone --branch "v${VERSION}" --recursive  https://github.com/opentraffic/osmlr.git ${PACKAGE}
 pushd ${PACKAGE}
 if [[ "${1}" == "--versioned-name" ]]; then
 	echo -e "osmlr${VERSION} (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=low\n" > ../../debian/changelog
 else
 	echo -e "osmlr (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=low\n" > ../../debian/changelog
 fi
-git log --pretty="  * %s" --no-merges $(git tag | grep -FB1 ${VERSION} | head -n 1)..${VERSION} >> ../../debian/changelog
+git log --pretty="  * %s" --no-merges $(git tag | grep -FB1 "v${VERSION}" | head -n 1)..v${VERSION} >> ../../debian/changelog
 echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> ../../debian/changelog
 find -name .git | xargs rm -rf
 popd
@@ -48,10 +48,10 @@ tar pczf ${PACKAGE}.tar.gz ${PACKAGE}
 rm -rf ${PACKAGE}
 
 #start building the package, choose l(ibrary) for the type
-bzr dh-make ${PACKAGE} ${VERSION} ${PACKAGE}.tar.gz << EOF
-l
-
-EOF
+bzr dh-make --bzr-only ${PACKAGE} ${VERSION} ${PACKAGE}.tar.gz
+pushd ${PACKAGE}
+dh_make --single --yes --packagename "${PACKAGE}_${VERSION}"
+popd
 
 #bzr will make you a template to fill out but who wants to do that manually?
 rm -rf ${PACKAGE}/debian

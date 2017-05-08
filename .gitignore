@@ -1,3 +1,6 @@
 *orig.tar.gz
 trusty
 xenial
+local_build/
+*~
+.vagrant/

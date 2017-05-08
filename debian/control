@@ -1,6 +1,15 @@
-Package: prime-server-bin
+Source: osmlr
+Priority: optional
+Maintainer: Team Valhalla <valhalla@mapzen.com>
+Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, pkg-config, vim-common, locales, libboost-all-dev, libcurl4-openssl-dev, libgeos-dev, libgeos++-dev, lua5.2, liblua5.2-dev, libprime-server0.6.3-dev, libprotobuf-dev, libspatialite-dev, libsqlite3-dev, protobuf-compiler, jq, dh-python, python-all-dev, libvalhalla-dev
+X-Python-Version: >= 2.6
+Standards-Version: 3.9.5
+Section: contrib/misc
+Homepage: https://github.com/opentraffic/osmlr
+
+Package: osmlr
 Section: contrib/misc
 Architecture: any
-Depends: libprime-server0 libvalhalla
+Depends: libvalhalla
 Description: Creates OSMLR traffic segments
  Creates OSMLR traffic segments for use in OpenTraffic from Valhalla tiles.

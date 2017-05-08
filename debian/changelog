@@ -1,5 +1,7 @@
-osmlr (0.0.1-0ubuntu1~unstable1) unstable; urgency=low
+osmlr (1.0.0-rc.3-0ubuntu1~xenial1) xenial; urgency=low
 
-  * Initial release.
+  * Update to work with latest Valhalla (tile hierarchy changes)
+  * Add stats for nuber of output tiles, max. number of OSMLR segments per tile, and average number of OSMLR segments per tile.
+  * Add output stats for number of tiles, max. number of OSMLR segments within a tile, and average number of OSMLR segments per tile.
 
- -- Matt Amos <zerebubuth@gmail.com>  Mon, 08 May 2017 17:58:17 +0100
+ -- Matt Amos <zerebubuth@gmail.com>  Mon, 08 May 2017 17:48:22 +0000
