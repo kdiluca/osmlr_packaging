@@ -1,0 +1,6 @@
+Package: prime-server-bin
+Section: contrib/misc
+Architecture: any
+Depends: libprime-server0 libvalhalla
+Description: Creates OSMLR traffic segments
+ Creates OSMLR traffic segments for use in OpenTraffic from Valhalla tiles.
