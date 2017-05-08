@@ -5,12 +5,12 @@ set -e
 sudo apt-get install -y git dh-make dh-autoreconf bzr bzr-builddeb pbuilder debootstrap devscripts distro-info ubuntu-dev-tools
 
 #tell bzr who we are
-DEBFULLNAME='Kevin Kreiser'
-DEBEMAIL='kevinkreiser@gmail.com'
+export DEBFULLNAME='Matt Amos'
+export DEBEMAIL='zerebubuth@gmail.com'
 bzr whoami "${DEBFULLNAME} <${DEBEMAIL}>"
 source /etc/lsb-release
 
-VERSION=$(head debian/changelog -n1 | sed -e "s/.*(//g" -e "s/-.*//g")
+VERSION=$(head debian/changelog -n1 | sed -e "s/.*(//g" -e "s/-[a-zA-Z0-9+~\.]\+).*//;s/).*//")
 
 # OPTIONS
 if [[ -z ${1} ]]; then
@@ -30,23 +30,23 @@ fi
 echo "HOOKDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/hooks" > ${HOME}/.pbuilderrc
 
 #can only make the source tarballs once, or launchpad will barf on differing timestamps
-git clone --branch ${VERSION} --recursive  https://github.com/kevinkreiser/prime_server.git libprime-server
-cp -rp libprime-server libprime-server${VERSION}
-tar -pczf libprime-server_${VERSION}.orig.tar.gz libprime-server
-tar -pczf libprime-server${VERSION}_${VERSION}.orig.tar.gz libprime-server${VERSION}
+git clone --branch "v${VERSION}" --recursive  https://github.com/opentraffic/osmlr.git osmlr
+cp -rp osmlr osmlr${VERSION}
+tar -pczf osmlr_${VERSION}.orig.tar.gz osmlr
+tar -pczf osmlr${VERSION}_${VERSION}.orig.tar.gz osmlr${VERSION}
 
 #for every combination of distribution and architecture with and without a pinned version
 for DISTRIBUTION in ${DISTRIBUTIONS[@]}; do
 for ARCHITECTURE in ${ARCHITECTURES[@]}; do
 for with_version in false true; do
-	#get prime-server code into the form bzr likes
+	#get code into the form bzr likes
 	target_dir="${DISTRIBUTION}/$(if [[ ${with_version} == true ]]; then echo pinned; else echo unpinned; fi)"
 	rm -rf ${target_dir}
 	mkdir -p ${target_dir}
-	PACKAGE="$(if [[ ${with_version} == true ]]; then echo libprime-server${VERSION}; else echo libprime-server; fi)"
+	PACKAGE="$(if [[ ${with_version} == true ]]; then echo osmlr${VERSION}; else echo osmlr; fi)"
 	cp -rp ${PACKAGE} ${target_dir}
         cp -rp ${PACKAGE}_${VERSION}.orig.tar.gz ${target_dir}
-	
+
 	#build the dsc and source.change files
 	cd ${target_dir}/${PACKAGE}
 	cp -rp ../../../debian .
@@ -55,10 +55,10 @@ for with_version in false true; do
 	if [[ ${with_version} == true ]]; then
 		for p in $(grep -F Package debian/control | sed -e "s/.*: //g"); do
 			for ext in .dirs .install; do
-				mv debian/${p}${ext} debian/$(echo ${p} | sed -e "s/prime-server/prime-server${VERSION}/g" -e "s/prime-server${VERSION}\([0-9]\+\)/prime-server${VERSION}-\1/g")${ext}
+				mv debian/${p}${ext} debian/$(echo ${p} | sed -e "s/osmlr/osmlr${VERSION}/g" -e "s/osmlr${VERSION}\([0-9]\+\)/osmlr${VERSION}-\1/g")${ext}
 			done
 		done
-		sed -i -e "s/\([b| ]\)prime-server/\1prime-server${VERSION}/g" -e "s/prime-server${VERSION}\([0-9]\+\)/prime-server${VERSION}-\1/g" debian/control debian/changelog
+		sed -i -e "s/\(^\|: \)osmlr/\1osmlr${VERSION}/g" -e "s/osmlr${VERSION}\([0-9]\+\)/osmlr${VERSION}-\1/g" debian/control debian/changelog
 	fi
 
 	#create and sign the stuff we need to ship the package to launchpad or try building it with pbuilder
@@ -82,4 +82,4 @@ done
 done
 
 #cleanup
-rm -rf libprime-server*
+rm -rf osmlr*
