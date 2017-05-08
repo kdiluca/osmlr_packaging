@@ -40,7 +40,7 @@ if [[ "${1}" == "--versioned-name" ]]; then
 else
 	echo -e "osmlr (${VERSION}-0ubuntu1~${DISTRIB_CODENAME}1) ${DISTRIB_CODENAME}; urgency=low\n" > ../../debian/changelog
 fi
-git log --pretty="  * %s" --no-merges $(git tag | grep -FB1 "v${VERSION}" | head -n 1)..v${VERSION} >> ../../debian/changelog
+git log --pretty="  * %w(72,0,4)%s" --no-merges $(git tag | grep -FB1 "v${VERSION}" | head -n 1)..v${VERSION} >> ../../debian/changelog
 echo -e "\n -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -u +"%a, %d %b %Y %T %z")" >> ../../debian/changelog
 find -name .git | xargs rm -rf
 popd
