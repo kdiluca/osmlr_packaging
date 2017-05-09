@@ -11,6 +11,16 @@ bzr whoami "${DEBFULLNAME} <${DEBEMAIL}>"
 source /etc/lsb-release
 
 VERSION=$(head debian/changelog -n1 | sed -e "s/.*(//g" -e "s/-[a-zA-Z0-9+~\.]\+).*//;s/).*//")
+VALHALLA_VERSION=$(grep "Pinned version libvalhalla: " debian/changelog | head -n 1 | sed "s/.*: //")
+
+if [[ -z ${VERSION} ]]; then
+    echo "Unable to determine version of OSMLR package"
+    exit 1
+fi
+if [[ -z ${VALHALLA_VERSION} ]]; then
+    echo "Unable to determine pinned version of Valhalla package"
+    exit 1
+fi
 
 # OPTIONS
 if [[ -z ${1} ]]; then
@@ -59,6 +69,7 @@ for with_version in false true; do
 			done
 		done
 		sed -i -e "s/\(^\|: \)osmlr/\1osmlr${VERSION}/g" -e "s/osmlr${VERSION}\([0-9]\+\)/osmlr${VERSION}-\1/g" debian/control debian/changelog
+		sed -i -e "s/libvalhalla-dev/libvalhalla${VALHALLA_VERSION}-dev/" debian/control
 	fi
 
 	#create and sign the stuff we need to ship the package to launchpad or try building it with pbuilder

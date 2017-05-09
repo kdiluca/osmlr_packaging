@@ -1,3 +1,10 @@
+osmlr (1.0.0-rc.3-0ubuntu2~unstable1) unstable; urgency=low
+
+  * Bump to depend on pinned versions of libvalhalla.
+  * Pinned version libvalhalla: 2.2.0
+
+ -- Matt Amos <zerebubuth@gmail.com>  Tue, 09 May 2017 17:54:42 +0000
+
 osmlr (1.0.0-rc.3-0ubuntu1~unstable1) unstable; urgency=low
 
   * Update to work with latest Valhalla (tile hierarchy changes)
