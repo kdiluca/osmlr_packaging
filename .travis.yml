@@ -4,7 +4,7 @@ before_install:
 install:
 before_script:
 script:
-  - ./package.sh ${DISTRIBUTION} ${ARCHITECTURE}
+  - ./package.sh ${DISTRIBUTIONS} ${ARCHITECTURES}
 after_failure:
 after_success:
 env:
