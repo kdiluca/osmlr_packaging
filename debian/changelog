@@ -1,3 +1,11 @@
+osmlr (1.0.0-rc.4-0ubuntu1~unstable1) unstable; urgency=low
+
+  * Bump version because launchpad doesn't like rebuilding packages
+    with the same version number.
+  * Pinned version libvalhalla: 2.2.0
+
+ -- Matt Amos <zerebubuth@gmail.com>  Wed, 10 May 2017 10:15:26 +0000
+
 osmlr (1.0.0-rc.3-0ubuntu2~unstable1) unstable; urgency=low
 
   * Bump to depend on pinned versions of libvalhalla.
