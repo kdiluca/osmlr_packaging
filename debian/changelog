@@ -4,28 +4,3 @@ osmlr (1.0.0-rc.5-0ubuntu1~unstable1) unstable; urgency=low
   * Pinned version libvalhalla: 2.3.7
 
  -- Greg Knisely <greg@mapzen.com>  Mon, 18 Sep 2017 18:30:00 +0000
-
-osmlr (1.0.0-rc.4-0ubuntu1~unstable1) unstable; urgency=low
-
-  * Bump version because launchpad doesn't like rebuilding packages
-    with the same version number.
-  * Pinned version libvalhalla: 2.2.0
-
- -- Matt Amos <zerebubuth@gmail.com>  Wed, 10 May 2017 10:15:26 +0000
-
-osmlr (1.0.0-rc.3-0ubuntu2~unstable1) unstable; urgency=low
-
-  * Bump to depend on pinned versions of libvalhalla.
-  * Pinned version libvalhalla: 2.2.0
-
- -- Matt Amos <zerebubuth@gmail.com>  Tue, 09 May 2017 17:54:42 +0000
-
-osmlr (1.0.0-rc.3-0ubuntu1~unstable1) unstable; urgency=low
-
-  * Update to work with latest Valhalla (tile hierarchy changes)
-  * Add stats for nuber of output tiles, max. number of OSMLR segments per
-    tile, and average number of OSMLR segments per tile.
-  * Add output stats for number of tiles, max. number of OSMLR segments
-    within a tile, and average number of OSMLR segments per tile.
-
- -- Matt Amos <zerebubuth@gmail.com>  Mon, 08 May 2017 18:23:16 +0000
