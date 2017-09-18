@@ -5,5 +5,5 @@ for repo in prime-server ${backports}; do
     add-apt-repository -y ppa:kevinkreiser/${repo}
     apt-get update -o Dir::Etc::sourcelist="sources.list.d/kevinkreiser-${repo}-$(lsb_release -c -s).list" -o APT::Get::List-Cleanup="0"
 done
-add-apt-repository -y ppa:valhalla-routing/valhalla
-apt-get update -o Dir::Etc::sourcelist="sources.list.d/valhalla-routing-valhalla-$(lsb_release -c -s).list" -o APT::Get::List-Cleanup="0"
+add-apt-repository -y ppa:valhalla-core/valhalla
+apt-get update -o Dir::Etc::sourcelist="sources.list.d/valhalla-core-valhalla-$(lsb_release -c -s).list" -o APT::Get::List-Cleanup="0"
