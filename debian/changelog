@@ -1,3 +1,10 @@
+osmlr (1.1.0-rc.1-0ubuntu1~unstable1) unstable; urgency=low
+
+  * Release of osmlr v1.1
+  * Pinned version libvalhalla: 2.4.1
+
+ -- Greg Knisely <greg@mapzen.com>  Mon, 13 Nov 2017 09:30:00 +0000
+
 osmlr (1.0.0-rc.6-0ubuntu1~unstable1) unstable; urgency=low
 
   * Fixing trusty release
